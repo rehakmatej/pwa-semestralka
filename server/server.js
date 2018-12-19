@@ -9,7 +9,11 @@ const staticFiles = express.static(path.join(__dirname, '../../client/build'))
 const app = express()
 
 // pass the static files (react app) to the express app. 
-app.use(staticFiles)
+if (process.env.NODE_ENV === 'production') {
+  app.use(staticFiles);
+}
+
+
 
 // our server instance
 const server = http.createServer(app)
