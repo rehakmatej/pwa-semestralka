@@ -41,7 +41,7 @@ io.on('connection', socket => {
 })
 
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, '../../client/build/index.html'), function(err) {
+  res.sendFile('../../client/build/index.html', function(err) {
     if (err) {
       res.status(500).send(err)
     }
