@@ -6,10 +6,10 @@ const path = require('path');
 // get reference to the client build directory
 const staticFiles = express.static(path.join(__dirname, '../../client/build'))
 
+const app = express()
+
 // pass the static files (react app) to the express app. 
 app.use(staticFiles)
-
-const app = express()
 
 // our server instance
 const server = http.createServer(app)
@@ -36,4 +36,4 @@ io.on('connection', socket => {
   })
 })
 
-server.listen(app.get('port'), () => console.log(`Listening on port ${port}`))
+server.listen(app.get('port'), () => console.log(`Listening on port ${app.get('port')}`))
