@@ -40,4 +40,12 @@ io.on('connection', socket => {
   })
 })
 
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../../client/build/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
+
 server.listen(app.get('port'), () => console.log(`Listening on port ${app.get('port')}`))
