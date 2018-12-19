@@ -5,7 +5,11 @@ var http = require('http');
 var socketIO = require('socket.io');
 var path = require('path');
 
-// our localhost port
+// get reference to the client build directory
+var staticFiles = express.static(path.join(__dirname, '../../client/build'));
+
+// pass the static files (react app) to the express app. 
+app.use(staticFiles);
 
 var app = express();
 
