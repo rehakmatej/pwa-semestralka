@@ -11,10 +11,29 @@ class Discuss extends Component {
     super()
     this.myRef = React.createRef()
     this.state = {
-      endpoint: "http://localhost:4001", // this is where we are connecting to with sockets
+      endpoint: "http://localhost:3001", // this is where we are connecting to with sockets
       messages: []
     }
+    this.socket = socketIOClient(this.state.endpoint)
+
+    this.socket.on('msgFromServer', function(data){
+      addMessage(data)
+
+  })
+
+  const addMessage = data => {
+    const { profile } = this.state
+    console.log(data);
+    if(profile.nickname !== data.nickname)
+    {
+      this.setState({messages: [...this.state.messages, data]});
+    }
+    console.log(this.state.messages);
+}
+
   }
+
+  
 
   componentWillMount() {
     this.setState({ profile: {} });
@@ -36,7 +55,7 @@ class Discuss extends Component {
     // this emits an event to the socket (your server) with an argument of 'red'
     // you can make the argument any color you would like, or any kind of data you want to send.
     //window.confirm(JSON.stringify(profile))
-    socket.emit('msgFromClient', {'nickname': profile.nickname, 'msg': this.refs.myRef.state.value, 'time': Moment().format("dddd, MMMM Do YYYY, h:mm:ss")}) 
+    socket.emit('msgFromClient', {'nickname': profile.nickname, 'msg': this.refs.myRef.state.value, 'time': Date()}) 
     // socket.emit('change color', 'red', 'yellow') | you can have multiple arguments
   }
 
